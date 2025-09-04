@@ -6,7 +6,7 @@ import { TaskCard } from '@/components/TaskCard';
 import { TaskForm } from '@/components/TaskForm';
 import { Calendar } from '@/components/Calendar';
 import { Button } from '@/components/ui/button';
-import { Plus, Calendar as CalendarIcon, List, Grid } from 'lucide-react';
+import { Plus, Calendar as CalendarIcon, List, Grid, Clock } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 import { useNotifications } from '@/hooks/useNotifications';
 import { Task, TaskFormData } from '@/types';
@@ -33,6 +33,9 @@ export default function Home() {
 
   const currentDate = parseISO(selectedDate);
   const tasksForDate = getTasksForDate(selectedDate);
+  
+  // Get all pending tasks from all dates
+  const allPendingTasks = tasks.filter(task => !task.completed);
 
   const handleAddTask = (taskData: TaskFormData) => {
     addTask(taskData);
@@ -190,6 +193,39 @@ export default function Home() {
                 )}
               </div>
             </div>
+
+            {/* All Pending Tasks Section */}
+            {allPendingTasks.length > 0 && (
+              <div className="mt-8 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center space-x-2">
+                    <Clock className="h-5 w-5 text-blue-600" />
+                    <h2 className="text-lg font-semibold text-gray-900">
+                      All Pending Tasks
+                    </h2>
+                  </div>
+                  <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                    {allPendingTasks.length} tasks
+                  </span>
+                </div>
+                
+                <p className="text-sm text-gray-600 mb-4">
+                  All incomplete tasks across all dates
+                </p>
+
+                <div className="space-y-3">
+                  {allPendingTasks.map((task) => (
+                    <TaskCard
+                      key={task.id}
+                      task={task}
+                      onToggleComplete={toggleTaskComplete}
+                      onDelete={deleteTask}
+                      onEdit={handleEditTask}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

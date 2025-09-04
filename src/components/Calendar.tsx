@@ -1,5 +1,5 @@
 import React from 'react';
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths } from 'date-fns';
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths, startOfWeek, endOfWeek } from 'date-fns';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from './ui/button';
 import { Task } from '@/types';
@@ -19,7 +19,13 @@ export const Calendar: React.FC<CalendarProps> = ({
 }) => {
   const monthStart = startOfMonth(currentDate);
   const monthEnd = endOfMonth(currentDate);
-  const days = eachDayOfInterval({ start: monthStart, end: monthEnd });
+  
+  // Get the start of the week containing the first day of the month
+  const calendarStart = startOfWeek(monthStart, { weekStartsOn: 0 }); // Sunday = 0
+  // Get the end of the week containing the last day of the month
+  const calendarEnd = endOfWeek(monthEnd, { weekStartsOn: 0 }); // Sunday = 0
+  
+  const days = eachDayOfInterval({ start: calendarStart, end: calendarEnd });
 
   const getTasksForDate = (date: Date) => {
     return tasks.filter(task => {
