@@ -1,40 +1,41 @@
 # Schedule Builder
 
-A modern, full-stack task scheduling application built with Next.js, TypeScript, and Tailwind CSS. Perfect for interview discussions and demonstrating full-stack development skills.
+A modern, full-stack task scheduling application built with Next.js, TypeScript, and Tailwind CSS. Features a responsive calendar interface, real-time task management, and desktop notifications.
 
 ## Features
 
 ### Core Functionality
-- ✅ **Task Management**: Add, edit, delete, and complete tasks
-- ✅ **Time Scheduling**: Set start and end times for tasks
-- ✅ **Priority Levels**: Low, medium, and high priority tasks
-- ✅ **Categories**: Organize tasks by category (Work, Personal, etc.)
-- ✅ **Progress Tracking**: Visual completion status with checkboxes
+- **Task Management**: Create, edit, delete, and complete tasks with full CRUD operations
+- **Time Scheduling**: Set precise start and end times with datetime pickers
+- **Priority System**: Three priority levels (Low, Medium, High) with visual color coding
+- **Categories**: Organize tasks by custom categories (Work, Personal, Health, etc.)
+- **Progress Tracking**: Visual completion status with checkboxes and progress indicators
 
 ### Advanced Features
-- 📅 **Calendar View**: Monthly calendar with task indicators
-- 🔔 **Desktop Notifications**: Browser notifications for task reminders
-- 💾 **Local Storage**: Persistent data storage using Zustand
-- 📱 **Responsive Design**: Works on desktop, tablet, and mobile
-- 🎨 **Modern UI**: Clean, intuitive interface with Tailwind CSS
+- **Calendar Integration**: Monthly calendar view with task indicators and date navigation
+- **Desktop Notifications**: Browser notifications for task reminders using the Notifications API
+- **Local Storage**: Persistent data storage using Zustand with automatic state management
+- **Responsive Design**: Mobile-first approach that works seamlessly across all devices
+- **Real-time Updates**: Instant UI updates with optimistic state management
 
 ### Technical Highlights
 - **TypeScript**: Full type safety throughout the application
-- **State Management**: Zustand for efficient state management
-- **Component Architecture**: Reusable, modular components
-- **Date Handling**: Robust date/time management with date-fns
-- **Notifications API**: Native browser notifications
-- **Responsive Design**: Mobile-first approach
+- **Modern React**: Built with Next.js 13 App Router and React 18
+- **State Management**: Efficient state management with Zustand
+- **Component Architecture**: Modular, reusable components with proper separation of concerns
+- **Date Handling**: Robust date/time management with date-fns library
+- **Accessibility**: Built with accessibility in mind using Radix UI primitives
 
 ## Tech Stack
 
 ### Frontend
-- **Next.js 15**: React framework with App Router
+- **Next.js 13**: React framework with App Router
 - **TypeScript**: Type-safe development
 - **Tailwind CSS**: Utility-first CSS framework
 - **Zustand**: Lightweight state management
 - **date-fns**: Modern date utility library
 - **Lucide React**: Beautiful icon library
+- **Radix UI**: Accessible component primitives
 
 ### Development Tools
 - **ESLint**: Code linting and formatting
@@ -44,14 +45,14 @@ A modern, full-stack task scheduling application built with Next.js, TypeScript,
 ## Getting Started
 
 ### Prerequisites
-- Node.js 18.18.0 or higher
+- Node.js 18.16.0 or higher
 - npm or yarn package manager
 
 ### Installation
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/DaniDeutsch/schedule-builder.git
 cd schedule-builder
 ```
 
@@ -135,55 +136,35 @@ src/
 - Permission handling
 - Background notification checking
 
-## Interview Discussion Points
-
-### Technical Architecture
-- **Component Design**: Explain the modular component structure
-- **State Management**: Discuss Zustand vs Redux/Context API
-- **Type Safety**: Benefits of TypeScript in a real application
-- **Performance**: Optimizations like memoization and efficient re-renders
-
-### Problem Solving
-- **Date Handling**: Complex date/time logic and edge cases
-- **Notifications**: Browser API integration and permission handling
-- **Data Persistence**: Local storage vs database considerations
-- **Responsive Design**: Mobile-first approach and breakpoint strategy
-
-### Scalability Considerations
-- **Database Integration**: How to migrate from localStorage to a real database
-- **Real-time Updates**: WebSocket integration for collaborative features
-- **Authentication**: User management and data isolation
-- **API Design**: RESTful API structure for backend integration
-
 ## Future Enhancements
 
-### Potential Features
-- 🔄 **Recurring Tasks**: Daily, weekly, monthly task patterns
-- 👥 **Collaboration**: Share schedules with team members
-- 📊 **Analytics**: Task completion statistics and insights
-- 🔗 **Integrations**: Calendar sync (Google Calendar, Outlook)
-- 🌙 **Dark Mode**: Theme switching capability
-- 📱 **PWA**: Progressive Web App for mobile installation
+### Planned Features
+- **Recurring Tasks**: Daily, weekly, monthly task patterns
+- **Team Collaboration**: Share schedules with team members
+- **Analytics Dashboard**: Task completion statistics and insights
+- **Calendar Sync**: Integration with Google Calendar, Outlook
+- **Dark Mode**: Theme switching capability
+- **PWA Support**: Progressive Web App for mobile installation
 
 ### Technical Improvements
 - **Backend API**: Node.js/Express or Next.js API routes
-- **Database**: PostgreSQL or MongoDB integration
-- **Real-time**: WebSocket connections for live updates
-- **Testing**: Jest and React Testing Library
-- **Deployment**: Vercel, Netlify, or AWS deployment
+- **Database Integration**: PostgreSQL or MongoDB
+- **Real-time Features**: WebSocket connections for live updates
+- **Testing Suite**: Jest and React Testing Library
+- **CI/CD Pipeline**: Automated testing and deployment
 
 ## Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-Built with ❤️ for demonstrating full-stack development skills
+Built with modern web technologies and best practices
