@@ -1,103 +1,206 @@
-import Image from "next/image";
+'use client';
+
+import React, { useState } from 'react';
+import { useScheduleStore } from '@/lib/store';
+import { TaskCard } from '@/components/TaskCard';
+import { TaskForm } from '@/components/TaskForm';
+import { Calendar } from '@/components/Calendar';
+import { Button } from '@/components/ui/button';
+import { Plus, Calendar as CalendarIcon, List, Grid } from 'lucide-react';
+import { format, parseISO } from 'date-fns';
+import { useNotifications } from '@/hooks/useNotifications';
+import { Task, TaskFormData } from '@/types';
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const {
+    tasks,
+    selectedDate,
+    viewMode,
+    addTask,
+    updateTask,
+    deleteTask,
+    toggleTaskComplete,
+    setSelectedDate,
+    setViewMode,
+    getTasksForDate,
+  } = useScheduleStore();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [editingTask, setEditingTask] = useState<Task | undefined>(undefined);
+
+  // Initialize notifications
+  useNotifications();
+
+  const currentDate = parseISO(selectedDate);
+  const tasksForDate = getTasksForDate(selectedDate);
+
+  const handleAddTask = (taskData: TaskFormData) => {
+    addTask(taskData);
+    setIsFormOpen(false);
+  };
+
+  const handleEditTask = (task: Task) => {
+    setEditingTask(task);
+    setIsFormOpen(true);
+  };
+
+  const handleUpdateTask = (taskData: TaskFormData) => {
+    if (editingTask) {
+      updateTask(editingTask.id, taskData);
+      setEditingTask(undefined);
+      setIsFormOpen(false);
+    }
+  };
+
+  const handleCancelForm = () => {
+    setIsFormOpen(false);
+    setEditingTask(undefined);
+  };
+
+  const completedTasks = tasksForDate.filter(task => task.completed);
+  const pendingTasks = tasksForDate.filter(task => !task.completed);
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            Schedule Builder
+          </h1>
+          <p className="text-gray-600">
+            Organize your day with seamless task scheduling and reminders
+          </p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Calendar Section */}
+          <div className="lg:col-span-1">
+            <Calendar
+              currentDate={currentDate}
+              tasks={tasks}
+              onDateSelect={(date) => setSelectedDate(format(date, 'yyyy-MM-dd'))}
+              onMonthChange={(date) => setSelectedDate(format(date, 'yyyy-MM-dd'))}
+            />
+          </div>
+
+          {/* Tasks Section */}
+          <div className="lg:col-span-2">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h2 className="text-xl font-semibold text-gray-900">
+                    {format(currentDate, 'EEEE, MMMM d, yyyy')}
+                  </h2>
+                  <p className="text-sm text-gray-500">
+                    {tasksForDate.length} tasks • {completedTasks.length} completed
+                  </p>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Button
+                    variant={viewMode === 'day' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setViewMode('day')}
+                  >
+                    <List className="h-4 w-4 mr-1" />
+                    Day
+                  </Button>
+                  <Button
+                    variant={viewMode === 'week' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setViewMode('week')}
+                  >
+                    <Grid className="h-4 w-4 mr-1" />
+                    Week
+                  </Button>
+                  <Button
+                    variant={viewMode === 'month' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setViewMode('month')}
+                  >
+                    <CalendarIcon className="h-4 w-4 mr-1" />
+                    Month
+                  </Button>
+                </div>
+              </div>
+
+              {/* Add Task Button */}
+              <div className="mb-6">
+                <Button
+                  onClick={() => setIsFormOpen(true)}
+                  className="w-full"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add New Task
+                </Button>
+              </div>
+
+              {/* Tasks List */}
+              <div className="space-y-4">
+                {tasksForDate.length === 0 ? (
+                  <div className="text-center py-8 text-gray-500">
+                    <CalendarIcon className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+                    <p>No tasks scheduled for this date</p>
+                    <p className="text-sm">Click "Add New Task" to get started</p>
+                  </div>
+                ) : (
+                  <>
+                    {/* Pending Tasks */}
+                    {pendingTasks.length > 0 && (
+                      <div>
+                        <h3 className="text-sm font-medium text-gray-700 mb-3">
+                          Pending Tasks ({pendingTasks.length})
+                        </h3>
+                        <div className="space-y-3">
+                          {pendingTasks.map((task) => (
+                            <TaskCard
+                              key={task.id}
+                              task={task}
+                              onToggleComplete={toggleTaskComplete}
+                              onDelete={deleteTask}
+                              onEdit={handleEditTask}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Completed Tasks */}
+                    {completedTasks.length > 0 && (
+                      <div className="mt-6">
+                        <h3 className="text-sm font-medium text-gray-700 mb-3">
+                          Completed Tasks ({completedTasks.length})
+                        </h3>
+                        <div className="space-y-3">
+                          {completedTasks.map((task) => (
+                            <TaskCard
+                              key={task.id}
+                              task={task}
+                              onToggleComplete={toggleTaskComplete}
+                              onDelete={deleteTask}
+                              onEdit={handleEditTask}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Task Form Modal */}
+      <TaskForm
+        task={editingTask}
+        onSubmit={editingTask ? handleUpdateTask : handleAddTask}
+        onCancel={handleCancelForm}
+        isOpen={isFormOpen}
+      />
     </div>
   );
 }
