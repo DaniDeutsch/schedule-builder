@@ -1,17 +1,19 @@
 # Schedule Builder
 
-a task scheduling app i built with Next.js and TypeScript. has a calendar view, task management, and desktop notifications.
+A task scheduling app I built with Next.js and TypeScript. Features a calendar view, task management, and desktop notifications.
+
+**Live Demo:** [https://schedule-builder-omega.vercel.app/](https://schedule-builder-omega.vercel.app/)
 
 ## Features
 
-- create, edit, delete, and complete tasks
-- set start and end times for tasks
-- three priority levels (low, medium, high) with color coding
-- organize by categories (work, personal, health, etc.)
-- monthly calendar view with task indicators
-- browser notifications for reminders (5 min before tasks)
-- local storage so your data persists
-- works on mobile and desktop
+- Create, edit, delete, and complete tasks with full CRUD operations
+- Set start and end times for tasks with datetime pickers
+- Three priority levels (Low, Medium, High) with color coding
+- Organize tasks by categories (Work, Personal, Health, etc.)
+- Monthly calendar view with task indicators
+- Browser notifications for reminders (5 minutes before tasks)
+- Local storage for data persistence
+- Fully responsive design for mobile and desktop
 
 ## Tech Stack
 
@@ -25,7 +27,7 @@ a task scheduling app i built with Next.js and TypeScript. has a calendar view, 
 
 ## Getting Started
 
-need Node.js 18.16.0 or higher
+**Prerequisites:** Node.js 18.16.0 or higher
 
 ```bash
 git clone https://github.com/DaniDeutsch/schedule-builder.git
@@ -34,22 +36,22 @@ npm install
 npm run dev
 ```
 
-then open [http://localhost:3000](http://localhost:3000)
+Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
 
 ## How to Use
 
-- click "Add New Task" to create a new task
-- fill in the details (title, time, priority, category, etc.)
-- use the calendar to jump between dates
-- click the circle icon to mark tasks complete
-- edit or delete using the icons on each task
-- make sure to allow notifications so you get reminders
+- Click "Add New Task" to create a new task
+- Fill in the task details (title, time, priority, category, etc.)
+- Use the calendar to navigate between dates
+- Click the circle icon to mark tasks as complete
+- Edit or delete tasks using the icons on each task card
+- Allow notification permissions to receive reminders
 
-## Things I Want to Add
+## Future Enhancements
 
-- recurring tasks
-- calendar sync with google/outlook
-- dark mode
-- analytics/stats dashboard
-- maybe team collaboration features
-- backend with actual database instead of local storage
+- Recurring tasks
+- Calendar sync with Google Calendar/Outlook
+- Dark mode
+- Analytics and statistics dashboard
+- Team collaboration features
+- Backend API with database integration
